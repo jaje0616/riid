@@ -2,37 +2,41 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>카카오톡 공유하기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Open Graph 설정 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="카카오톡 공유하기">
+    <meta property="og:description" content="카카오톡 공유하기.">
+    <meta property="og:image" content="https://jaje0616.github.io/riid/images/testing1.png">
+    <meta property="og:image:width" content="800">
+    <meta property="og:image:height" content="400">
+    <meta property="og:url" content="https://example.com">
+    
+    <!-- 카카오 SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
-        Kakao.init('00f60c6559e1ac8b668f399686bd6d58'); // 여기에 카카오 JavaScript 키 입력
-
-        function sendKakaoMessage() {
+        Kakao.init("00f60c6559e1ac8b668f399686bd6d58"); // 카카오 앱 키 입력
+        function shareKakao() {
             Kakao.Link.sendDefault({
-                objectType: 'feed',
+                objectType: "feed",
                 content: {
                     title: '팀 데스티니로 초대합니다!',
                     description: '버튼을 눌러 초대장을 열어주세요!',
                     imageUrl: 'https://jaje0616.github.io/riid/images/testing1.png', // 공유할 이미지
                     link: {
-                        mobileWebUrl: 'https://example.com',
-                        webUrl: 'https://example.com'
+                        mobileWebUrl: "https://example.com",
+                        webUrl: "https://example.com"
                     }
-                },
-                buttons: [
-                    {
-                        title: '자세히 보기',
-                        link: {
-                            mobileWebUrl: 'https://example.com',
-                            webUrl: 'https://example.com'
-                        }
-                    }
-                ]
+                }
             });
         }
     </script>
+    
+    <title>OG 이미지 테스트</title>
 </head>
 <body>
-    <button onclick="sendKakaoMessage()">카카오톡 공유</button>
+    <h1>카카오톡 공유 미리보기 테스트</h1>
+    <button onclick="shareKakao()">카카오톡 공유하기</button>
 </body>
 </html>
