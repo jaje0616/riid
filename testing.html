@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>카카오톡 버튼 예제</title>
+    <title>카카오톡 공유하기</title>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
         Kakao.init('fc5632f47df1d7d46e7ef3e192f71656'); // 여기에 카카오 JavaScript 키 입력
@@ -11,10 +11,11 @@
             Kakao.Link.sendDefault({
                 objectType: 'feed',
                 content: {
-                    title: '카카오톡 버튼 예제',
-                    description: '버튼을 눌러 확인하세요!',
-                    imageUrl: 'https://example.com/image.png',
+                    title: '카카오톡 공유 버튼 예제',
+                    description: '버튼을 눌러 카카오톡으로 공유하세요!',
+                    imageUrl: 'https://example.com/image.png', // 공유할 이미지
                     link: {
+                        mobileWebUrl: 'https://example.com',
                         webUrl: 'https://example.com'
                     }
                 },
@@ -22,6 +23,7 @@
                     {
                         title: '자세히 보기',
                         link: {
+                            mobileWebUrl: 'https://example.com',
                             webUrl: 'https://example.com'
                         }
                     }
