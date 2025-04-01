@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>카카오톡 버튼 예제</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        Kakao.init('fc5632f47df1d7d46e7ef3e192f71656'); // 여기에 카카오 JavaScript 키 입력
+
+        function sendKakaoMessage() {
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '카카오톡 버튼 예제',
+                    description: '버튼을 눌러 확인하세요!',
+                    imageUrl: 'https://example.com/image.png',
+                    link: {
+                        webUrl: 'https://example.com'
+                    }
+                },
+                buttons: [
+                    {
+                        title: '자세히 보기',
+                        link: {
+                            webUrl: 'https://example.com'
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+</head>
+<body>
+    <button onclick="sendKakaoMessage()">카카오톡 공유</button>
+</body>
+</html>
