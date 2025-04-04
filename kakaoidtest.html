@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 확인 페이지</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // ✅ 카카오 API 초기화
+        Kakao.init("YOUR_KAKAO_JAVASCRIPT_KEY"); // 🔹 본인 API 키 입력
+        console.log("카카오 초기화 상태:", Kakao.isInitialized());
+
+        // ✅ 로그인 여부 확인 함수
+        function checkLoginStatus() {
+            const token = Kakao.Auth.getAccessToken(); // 🔹 현재 토큰 확인
+
+            if (token) {
+                console.log("사용자가 로그인한 상태입니다. ✅");
+
+                // 🔹 로그인한 사용자 정보 가져오기
+                Kakao.API.request({
+                    url: "/v2/user/me",
+                    success: function(res) {
+                        console.log("사용자 정보:", res);
+                        document.getElementById("nickname").innerText = res.kakao_account.profile.nickname;
+                        document.getElementById("email").innerText = res.kakao_account.email;
+                        document.getElementById("userInfo").style.display = "block";
+                        document.getElementById("loginPrompt").style.display = "none";
+                    },
+                    fail: function(error) {
+                        console.error("사용자 정보 불러오기 실패", error);
+                    }
+                });
+
+            } else {
+                console.log("사용자가 로그인하지 않았습니다. ❌");
+                document.getElementById("loginPrompt").style.display = "block";
+                document.getElementById("userInfo").style.display = "none";
+            }
+        }
+
+        // ✅ 페이지 로드 시 로그인 상태 확인
+        window.onload = checkLoginStatus;
+    </script>
+</head>
+<body>
+
+    <h2>🚀 로그인 상태 확인 페이지</h2>
+
+    <!-- 로그인 안내 메시지 -->
+    <div id="loginPrompt" style="display:none;">
+        <p>🔹 로그인이 필요합니다.</p>
+        <a href="YOUR_LOGIN_PAGE_URL">카카오 로그인 페이지로 이동</a>
+    </div>
+
+    <!-- 로그인된 사용자 정보 표시 -->
+    <div id="userInfo" style="display:none;">
+        <p><strong>닉네임:</strong> <span id="nickname"></span></p>
+        <p><strong>이메일:</strong> <span id="email"></span></p>
+    </div>
+
+</body>
+</html>
