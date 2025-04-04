@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오 간편 로그인</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+
+    <h2>카카오 로그인 테스트</h2>
+
+    <!-- 카카오 로그인 버튼 -->
+    <button onclick="kakaoLogin()">카카오 로그인</button>
+
+    <!-- 로그인한 사용자 정보 표시 -->
+    <div id="userInfo" style="display:none;">
+        <img id="profileImg" src="" alt="프로필 사진" width="100">
+        <p id="nickname"></p>
+        <p id="email"></p>
+        <button onclick="kakaoLogout()">로그아웃</button>
+    </div>
+
+    <script>
+        // 카카오 SDK 초기화 (JavaScript 키 입력)
+        Kakao.init("7ad840c1894e4dd347df49773f739233"); // 카카오 개발자 센터에서 발급받은 키 입력
+        console.log(Kakao.isInitialized()); // SDK가 정상적으로 초기화되었는지 확인
+
+        // 카카오 로그인 함수
+        function kakaoLogin() {
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    console.log("로그인 성공", authObj);
+                    getUserInfo(); // 로그인 성공 후 사용자 정보 가져오기
+                },
+                fail: function(err) {
+                    console.error("로그인 실패", err);
+                }
+            });
+        }
+
+        // 사용자 정보 가져오기
+        function getUserInfo() {
+            Kakao.API.request({
+                url: "/v2/user/me",
+                success: function(res) {
+                    console.log("사용자 정보", res);
+                    document.getElementById("nickname").innerText = "닉네임: " + res.kakao_account.profile.nickname;
+                    document.getElementById("email").innerText = "이메일: " + res.kakao_account.email;
+                    document.getElementById("profileImg").src = res.kakao_account.profile.thumbnail_image_url;
+                    document.getElementById("userInfo").style.display = "block";
+                },
+                fail: function(error) {
+                    console.error("사용자 정보 요청 실패", error);
+                }
+            });
+        }
+
+        // 로그아웃 기능
+        function kakaoLogout() {
+            Kakao.Auth.logout(function() {
+                alert("로그아웃 완료!");
+                document.getElementById("userInfo").style.display = "none";
+            });
+        }
+    </script>
+
+</body>
+</html>
